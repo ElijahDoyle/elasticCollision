@@ -69,8 +69,6 @@ def collide(obj1,obj2):
 
 # now I gotta fix where they overlap
 # this actually does not work
-
-#FIX THIS
     dx,dy = dp1.as_tuple()
     dist = math.hypot(dx, dy)
     angle = math.atan2(dy, dx) + 0.5 * math.pi
