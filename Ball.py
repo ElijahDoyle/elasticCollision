@@ -56,25 +56,31 @@ class Ball:
 
 
         if self.position.y > height - self.radius:
-            self.position.y = height - self.radius
-            self.angle = - self.angle
-            self.magnitude *= self.elasticity
-            self.velocity = Vector2(math.cos(self.angle) * self.magnitude, math.sin(self.angle) * self.magnitude)
+            if self.gravity.y == .35:
+                if self.velocity.y > 3 or self.clicked:
+                    self.position.y = height - self.radius
+                    self.angle = - self.angle
+                    self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * .9), math.sin(self.angle) * (self.magnitude * .8))
 
-            # if self.velocity.y > 2 or self.clicked:
-            #     self.position.y = height - self.radius
-            #     self.angle = - self.angle
-            #     self.magnitude *= self.elasticity
-            #     self.velocity = Vector2(math.cos(self.angle) * self.magnitude, math.sin(self.angle) * self.magnitude)
-            #     if self.velocity.y <= 3:
-            #
-            #         self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * 0.98), math.sin(self.angle) *
-            #                                 (self.magnitude * self.elasticity))
-            #
-            # else:
-            #     self.angle = - self.angle
-            #     self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * 0.95), math.sin(self.angle) *
-            #                             (self.magnitude* self.elasticity))
+                elif self.velocity.y > 1.4:
+                    self.position.y = height - self.radius
+                    self.angle = - self.angle
+                    self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * .95),
+                                            math.sin(self.angle) * (self.magnitude * .7))
+                else:
+                    self.position.y = height - self.radius
+                    self.angle = - self.angle
+                    self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * .9),
+                                            math.sin(self.angle) * (self.magnitude * self.elasticity))
+                    self.velocity.y = 0
+            else:
+                self.position.y = height - self.radius
+                self.angle = - self.angle
+                self.magnitude *= self.elasticity
+                self.velocity = Vector2(math.cos(self.angle) * (self.magnitude),
+                                        math.sin(self.angle) * (self.magnitude))
+
+
 
 
 
