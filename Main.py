@@ -15,6 +15,8 @@ clicked = None
 alreadyClicked = False
 showVectors = False
 gravityOn = True
+dragOn = True
+elasticityOn = True
 
 
 #ball objects
@@ -52,6 +54,11 @@ while not done: #this is the main loop
                     gravityOn = False
                 else:
                     gravityOn = True
+            elif event.key -- pygame.K_e:
+                if elasticityOn:
+                    elasticityOn = False
+                else:
+                    elasticityOn = True
 
 
     elasticCollisions(ballList)
@@ -61,6 +68,14 @@ while not done: #this is the main loop
             ball.gravity = Vector2(0, 0.35)
         else:
             ball.gravity = Vector2(0,0)
+        if elasticityOn:
+            ball.elasticity = 0.875
+        else:
+            ball.elasticity = 1
+        if dragOn:
+            ball.drag = 0.999
+        else:
+            ball.drag = 1
         ball.bounce(screenWidth,screenHeight)
         ball.update()
         ball.display(screen, showVectors)
