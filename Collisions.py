@@ -5,6 +5,9 @@ import math
 def dot_product(vec1,vec2):
     return  vec1.x * vec2.x + vec1.y * vec2.y
 
+def inner_product(vec1,vec2):
+    return vec1.x * vec1.y + vec2.x * vec2.y
+
 # detects when two objects touch
 def collisionDetect(obj1,obj2):
     distance = ((obj1.position.x - obj2.position.x)**2 + (obj1.position.y - obj2.position.y)**2)**(1/2)
@@ -22,8 +25,8 @@ def elasticCollisions(objectList):
                 b2 = otherBall
 
                 if collisionDetect(b1,b2):
-                   # print("collision")
-                   collide(b1,b2)
+                    print("collision")
+                    collide(b1,b2)
                 else:
                     pass
 
@@ -65,8 +68,10 @@ def collide(obj1,obj2):
     obj2.velocity = v2_Prime
 
 # now I gotta fix where they overlap
-# this actually works
-    dx,dy = dv1.as_tuple()
+# this actually does not work
+
+#FIX THIS
+    dx,dy = dp1.as_tuple()
     dist = math.hypot(dx, dy)
     angle = math.atan2(dy, dx) + 0.5 * math.pi
     overlap = 0.5 * (obj1.radius + obj2.radius - dist + 1)

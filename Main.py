@@ -55,13 +55,14 @@ while not done: #this is the main loop
 
 
     elasticCollisions(ballList)
+
     for ball in ballList:
         if gravityOn:
             ball.gravity = Vector2(0, 0.35)
         else:
             ball.gravity = Vector2(0,0)
         ball.bounce(screenWidth,screenHeight)
-        ball.update(1)
+        ball.update()
         ball.display(screen, showVectors)
 
         ball.hitbox = pygame.Rect(ball.position.x - ball.radius, ball.position.y - ball.radius, ball.radius * 2, ball.radius * 2)

@@ -27,13 +27,12 @@ class Ball:
             pygame.draw.line(screen, (200, 50, 255), (self.position.x, self.position.y), (
             (self.position.x + math.cos(self.angle) * self.magnitude * 10), self.position.y + math.sin(self.angle) * self.magnitude * 10), 5)
 
-    def update(self, seconds):
+    def update(self):
 
         if not self.clicked:
             self.magnitude = self.velocity.get_magnitude()
             self.angle = math.atan2(self.velocity.y, self.velocity.x)
             self.position = self.position.add(self.velocity) #changes the ball's position based on its velocity
-            self.position = self.position.mul(seconds)
             self.velocity = self.velocity.mul(self.drag) #multiplies the velocity vector by the drag scalar
             self.velocity = self.velocity.add(self.gravity) #applies gravity to the ball
         else:
@@ -57,21 +56,25 @@ class Ball:
 
 
         if self.position.y > height - self.radius:
+            self.position.y = height - self.radius
+            self.angle = - self.angle
+            self.magnitude *= self.elasticity
+            self.velocity = Vector2(math.cos(self.angle) * self.magnitude, math.sin(self.angle) * self.magnitude)
 
-            if self.velocity.y > 2 or self.clicked:
-                self.position.y = height - self.radius
-                self.angle = - self.angle
-                self.magnitude *= self.elasticity
-                self.velocity = Vector2(math.cos(self.angle) * self.magnitude, math.sin(self.angle) * self.magnitude)
-                if self.velocity.y <= 3:
-
-                    self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * 0.98), math.sin(self.angle) *
-                                            (self.magnitude * self.elasticity))
-
-            else:
-                self.angle = - self.angle
-                self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * 0.95), math.sin(self.angle) *
-                                        (self.magnitude* self.elasticity))
+            # if self.velocity.y > 2 or self.clicked:
+            #     self.position.y = height - self.radius
+            #     self.angle = - self.angle
+            #     self.magnitude *= self.elasticity
+            #     self.velocity = Vector2(math.cos(self.angle) * self.magnitude, math.sin(self.angle) * self.magnitude)
+            #     if self.velocity.y <= 3:
+            #
+            #         self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * 0.98), math.sin(self.angle) *
+            #                                 (self.magnitude * self.elasticity))
+            #
+            # else:
+            #     self.angle = - self.angle
+            #     self.velocity = Vector2(math.cos(self.angle) * (self.magnitude * 0.95), math.sin(self.angle) *
+            #                             (self.magnitude* self.elasticity))
 
 
 
