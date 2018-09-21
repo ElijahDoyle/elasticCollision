@@ -74,7 +74,7 @@ def collide(obj1,obj2):
     angle = math.atan2(dy, dx) + 0.5 * math.pi
     overlap = 0.5 * (obj1.radius + obj2.radius - dist + 1)
     obj1.position.x += math.sin(angle) * overlap
-    obj2.position.y -= math.cos(angle) * overlap
+    obj1.position.y -= math.cos(angle) * overlap
     obj2.position.x -= math.sin(angle) * overlap
     obj2.position.y += math.cos(angle) * overlap
 
