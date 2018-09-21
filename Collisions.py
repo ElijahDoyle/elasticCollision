@@ -5,9 +5,6 @@ import math
 def dot_product(vec1,vec2):
     return  vec1.x * vec2.x + vec1.y * vec2.y
 
-def inner_product(vec1,vec2):
-    return vec1.x * vec1.y + vec2.x * vec2.y
-
 # detects when two objects touch
 def collisionDetect(obj1,obj2):
     distance = ((obj1.position.x - obj2.position.x)**2 + (obj1.position.y - obj2.position.y)**2)**(1/2)
@@ -51,14 +48,14 @@ def collide(obj1,obj2):
     dp1_magnitude = dp1.get_magnitude()  # just the magnitude of dp1
     dp2_magnitude = dp2.get_magnitude()  # just the magnitude of dp2
 
-    dv1_dp1_dotProduct = int(dot_product(dv1,dp1))  # the dot product of dv1 and dp1
-    dv2_dp2_dotProduct = int(dot_product(dv2,dp2))  # the dot product of dv2 and dp2
+    dv1_dp1_dot_product = int(dot_product(dv1, dp1))  # the dot product of dv1 and dp1
+    dv2_dp2_dot_product= int(dot_product(dv2, dp2))  # the dot product of dv2 and dp2
 
-# the next variables, v1_Prime and v2_Prime are the the new velocities of obj1 and obj2, respectively
+    # the next variables, v1_Prime and v2_Prime are the the new velocities of obj1 and obj2, respectively
 # it uses a big physics equation that I honestly don't understand
 # it outputs a velocity vector
-    v1_Prime_scalar = ((2*m2)/totalMass) * (dv1_dp1_dotProduct/(dp1_magnitude ** 2))
-    v2_Prime_scalar = ((2*m1)/totalMass) * (dv2_dp2_dotProduct/(dp2_magnitude ** 2))
+    v1_Prime_scalar = ((2*m2)/totalMass) * (dv1_dp1_dot_product/(dp1_magnitude ** 2))
+    v2_Prime_scalar = ((2*m1)/totalMass) * (dv2_dp2_dot_product/(dp2_magnitude ** 2))
     v1_Prime0 = dp1.mul(v1_Prime_scalar)
     v1_Prime = v1.sub(v1_Prime0)
     v2_Prime0 = dp2.mul(v2_Prime_scalar)
@@ -69,9 +66,9 @@ def collide(obj1,obj2):
 
 # now I gotta fix where they overlap
 # this actually does not work
-    dx,dy = dp1.as_tuple()
-    dist = math.hypot(dx, dy)
-    angle = math.atan2(dy, dx) + 0.5 * math.pi
+    normalVector = dp1
+    dist = normalVector.get_magnitude()
+    angle = math.atan2(normalVector.y, normalVector.x) + (0.5 * math.pi)
     overlap = 0.5 * (obj1.radius + obj2.radius - dist + 1)
     obj1.position.x += math.sin(angle) * overlap
     obj1.position.y -= math.cos(angle) * overlap
